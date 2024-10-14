@@ -1,0 +1,60 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 6.320404594208429
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 1745.5157737347911
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "33f4b550-677f-4f1e-a340-59f8841899c0",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 462.96963652576744,
+            "y": 1388.4129141620149
+          },
+          "nodeIndex": "Municipality Populations",
+          "nodeLineageTag": "7d490865-b902-4f03-bf95-58a24401aa31",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 746.96963652576744,
+            "y": 762.88594436621975
+          },
+          "nodeIndex": "Waterfall Table",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 63.287087723233995,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

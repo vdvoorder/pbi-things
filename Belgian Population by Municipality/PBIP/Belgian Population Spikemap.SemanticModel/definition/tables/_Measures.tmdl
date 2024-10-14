@@ -1,0 +1,160 @@
+table _Measures
+	lineageTag: 33f4b550-677f-4f1e-a340-59f8841899c0
+
+	measure 'Change Country (%)' = ```
+			
+			    CALCULATE(
+			        [Change (%)],
+			        REMOVEFILTERS('Municipality Populations')
+			    )
+			```
+		formatString: +0.0%;-0.0%
+		lineageTag: 7a60b216-cc6a-46cb-8ec5-b924a6764b1c
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Change vs Country (pp)' = ```
+			
+			    IF(
+			        ISFILTERED('Municipality Populations'),
+			        100 * ([Change (%)] - [Change Country (%)])
+			    )
+			```
+		formatString: +0.0\p\p;-0.0\p\p
+		lineageTag: bec7f7f5-41a8-4d7f-b5e5-5c3d7c9ef918
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Change (%)' = ```
+			
+			    DIVIDE(
+			        [Change],
+			        [Base]
+			    )
+			```
+		formatString: +0.0%;-0.0%
+		lineageTag: 0220ad7d-1075-48d3-9696-785cbdaff58d
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'List of Municipalities' =
+			
+			VAR __NumberOfEntries = COUNTROWS('Municipality Populations')
+			VAR __NumberOfEntriesToList = 5
+			RETURN
+			IF(
+			    __NumberOfEntries <= __NumberOfEntriesToList,
+			    CONCATENATEX(
+			        'Municipality Populations',
+			        'Municipality Populations'[Municipality],
+			        UNICHAR(10),
+			        'Municipality Populations'[Municipality],
+			        ASC
+			    ),
+			    CONCATENATEX(
+			        TOPN(__NumberOfEntriesToList, 'Municipality Populations', 'Municipality Populations'[Municipality], ASC),
+			        'Municipality Populations'[Municipality],
+			        UNICHAR(10),
+			        'Municipality Populations'[Municipality],
+			        ASC
+			    ) & UNICHAR(10) & __NumberOfEntries - __NumberOfEntriesToList & " more..."
+			)
+		lineageTag: 1ebc41b7-25e8-4c0f-9df6-0680f58dda21
+
+	measure Change = [Comparison] - [Base]
+		formatString: +#,#;-#,#
+		lineageTag: 646cea38-7574-449e-ad9d-4846c25d3ff8
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure Base = SUM( 'Municipality Populations'[2014] )
+		formatString: #,0
+		lineageTag: efe1aeec-0dad-45b0-865d-0ba7d4d36d8d
+
+	measure Comparison = SUM( 'Municipality Populations'[2024] )
+		formatString: #,0
+		lineageTag: 0b25d7cd-1e7e-49b6-8024-91c729a1ba1f
+
+	measure 'Number of Municipalities' = COUNTROWS( 'Municipality Populations' )
+		formatString: 0
+		lineageTag: 3182f39a-5bd6-4835-83ce-a864f3213497
+
+	measure 'Color Histogram Column Fill' = ```
+			
+			    IF(
+			        SELECTEDVALUE('Municipality Populations'[Change vs Country (pp) Bins]) < 0,
+			        [Color Negative],
+			        [Color Positive]
+			    )
+			```
+		lineageTag: b7f452ef-8c73-481c-ae54-d36b550eec9b
+
+	measure 'Color Negative' =
+			"minColor"
+			// reserved keyword for diverging min theme color
+		lineageTag: 55505c30-4239-4243-9a2a-424575be859a
+
+	measure 'Color Positive' =
+			"maxColor"
+			// reserved keyword for diverging max theme color
+			//"#E8932F"
+			//"rgb(232, 146, 48)"
+			//"hsl(32, 80%, 55%)" // 3rd hsl % could be used to hack together gradients?
+		lineageTag: 9a6d1972-bb89-4ab7-ac4d-4185452a5e84
+
+	measure 'Min Change vs Country (pp)' = MINX('Municipality Populations', 'Municipality Populations'[Change vs Country (pp) Bins])
+		lineageTag: 9b51672d-8b06-46c2-a89b-51006967e1e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Max Change vs Country (pp)' = MAXX('Municipality Populations', 'Municipality Populations'[Change vs Country (pp) Bins])
+		lineageTag: 981d87dd-f750-45b2-9306-3f1cea66a81c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Text' =
+			
+			SELECTEDVALUE('Municipality Populations'[Municipality])
+			& " had " & FORMAT([Base], "#,#") & " inhabitants in 2014 and "
+			& FORMAT([Comparison], "#,#") & " inhabitants in 2024. This is a "
+			& IF([Change] >= 0, "growth of ", "decline of ") & FORMAT(ABS([Change]), "#,#")
+			& " inhabitants, or " & FORMAT([Change (%)], "+0.0%;-0.0%") & " compared to 2014."
+			& UNICHAR(10)
+			& SELECTEDVALUE('Municipality Populations'[Municipality])
+			& IF(RIGHT(SELECTEDVALUE('Municipality Populations'[Municipality]), 1) IN {"s", "x"}, "' ", "'s ")
+			& IF([Change] >= 0, "growth of ", "decline of ") & FORMAT(ABS([Change (%)]), "0.0%")
+			& IF([Change vs Country (pp)] >= 0, " means it outgrew ", " means it fell behind ")
+			& "Belgium's population growth of "
+			& FORMAT([Change Country (%)], "0.0%") & " by "
+			& FORMAT(ABS([Change vs Country (pp)]), "0.0") & " percentage points (pp)."
+		lineageTag: f6b91079-d3fe-4580-9276-c6b240b9d5e3
+
+	measure 'Measure Waterfall' = ```
+			
+			    SWITCH(
+			        SELECTEDVALUE( 'Waterfall Table'[Measure] ),
+			        "Belgium", [Change Country (%)] * 100,
+			        "Difference", DIVIDE([Change vs Country (pp)], 1),
+			        BLANK()
+			    )
+			```
+		lineageTag: a76624d8-6e41-46a0-8f09-72fc70c7de24
+
+		formatStringDefinition = SELECTEDVALUE( 'Waterfall Table'[Format])
+
+	measure 'Label Text Growth/Decline' = IF([Change] >= 0, "growth", "decline")
+		lineageTag: 2d1deb0b-5b2d-444b-ba9a-4e28cb57d535
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

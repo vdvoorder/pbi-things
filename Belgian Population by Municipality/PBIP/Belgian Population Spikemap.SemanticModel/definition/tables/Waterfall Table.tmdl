@@ -1,0 +1,55 @@
+table 'Waterfall Table'
+	lineageTag: f2455696-fe4c-4385-92b8-9ca4e97ff409
+
+	column Measure
+		dataType: string
+		lineageTag: c3cfb737-9c25-4e2e-9e64-bd426aff61a8
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Measure]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f8bd9c2-439c-4fa8-8d46-c2ca774ea1c5
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Format
+		dataType: string
+		lineageTag: 22756e95-c3f6-4087-aa47-a48fc41ea97e
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Format]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Waterfall Table' = calculated
+		mode: import
+		source = ```
+				
+				    DATATABLE(
+				        "Measure", STRING,
+				        "Order", INTEGER,
+				        "Format", STRING,
+				        {
+				            // Use ％ instead of % symbol to avoid automatic multiplication by 100﹪
+				            {"Belgium", 1, "+0.0％;-0.0％"},
+				            //{"Difference", 2, "+0.0pp;-0.0pp"}
+				            //{"Difference", 2, "0.0%;-0.0%;0.0%"}
+				            {"Difference", 2, "+0.0pp;-0.0pp"}
+				        }
+				    )
+				```
+
+	annotation PBI_Id = 48002c7d46854b8782fc5ce8f5f3d0a5
+

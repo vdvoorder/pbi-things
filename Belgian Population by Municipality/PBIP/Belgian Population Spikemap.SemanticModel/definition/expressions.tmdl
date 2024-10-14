@@ -1,0 +1,52 @@
+expression 'File Path' = "C:\Users\RuVd\OneDrive\Power BI\Projects\Belgian Population By Municipality\Data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a309d8cb-460d-4819-be93-c59dd65555e4
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Municipality Fusions' =
+		let
+		    Source = #table(
+		        type table [Old = text, New = text], {
+		            {"Neerpelt", "Pelt"}
+		            ,{"Overpelt", "Pelt"}
+		            ,{"Puurs", "Puurs-Sint-Amands"}
+		            ,{"Sint-Amands", "Puurs-Sint-Amands"}
+		            ,{"Kruishoutem", "Kruisem"}
+		            ,{"Zingem", "Kruisem"}
+		            ,{"Lovendegem", "Lievegem"}
+		            ,{"Zomergem", "Lievegem"}
+		            ,{"Waarschoot", "Lievegem"}
+		            ,{"Opglabbeek", "Oudsbergen"}
+		            ,{"Meeuwen-Gruitrode", "Oudsbergen"}
+		            ,{"Nevele", "Deinze"}
+		            ,{"Knesselare", "Aalter"}
+		        }
+		    )
+		in
+		    Source
+	lineageTag: 4f424c62-1870-4c61-b862-d820be546d35
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Municipalities Geocoded' =
+		let
+		    Source = Folder.Files(#"File Path"),
+		    #"Navigated Folder" = Source{[#"Folder Path" = #"File Path", Name = "Municipalities Geocoded.csv"]},
+		    #"Navigated File" = #"Navigated Folder"[Content],
+		    #"Imported Excel Workbook" = Csv.Document(#"Navigated File"),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Imported Excel Workbook", [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Municipality", type text}, {"Latitude", type number}, {"Longitude", type number}}),
+		    #"Sorted Latitude" = Table.Sort(#"Changed Type",{{"Latitude", Order.Descending}}),
+		    #"Added ZIndex" = Table.AddIndexColumn(#"Sorted Latitude", "ZIndex", 1, 1, Int64.Type)
+		in
+		    #"Added ZIndex"
+	lineageTag: 00a971d0-b9f9-4722-bf7a-c8e1c3c18616
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

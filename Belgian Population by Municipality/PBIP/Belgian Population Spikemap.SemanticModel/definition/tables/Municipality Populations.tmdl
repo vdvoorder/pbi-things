@@ -1,0 +1,234 @@
+table 'Municipality Populations'
+	lineageTag: 7d490865-b902-4f03-bf95-58a24401aa31
+
+	column Municipality
+		dataType: string
+		lineageTag: c1f176d9-b5c3-4b2a-92f3-8cad23e7f714
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Municipality
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 84faa1c7-97fd-4ff5-8612-610306f5b1ba
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: aae74f89-b1b4-4779-b140-b2804e3cd153
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ZIndex
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b9f8b9f-2847-451c-ad70-bf40a0be4b06
+		summarizeBy: sum
+		sourceColumn: ZIndex
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2014
+		dataType: int64
+		formatString: #,0
+		lineageTag: 482c2c50-8147-4de1-9d80-c49c0020e8b5
+		summarizeBy: sum
+		sourceColumn: 2014
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2024
+		dataType: int64
+		formatString: #,0
+		lineageTag: a1ec298d-5972-4e86-8f53-a215dcec63bb
+		summarizeBy: sum
+		sourceColumn: 2024
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Change vs Country (pp) for Bins' =
+			
+			// Break lineage to avoid circular dependency error when creating groups from calculated column.
+			// See https://www.sqlbi.com/articles/avoiding-circular-dependency-errors-in-dax/
+			    CALCULATE(
+			        [Change vs Country (pp)],
+			        ALLEXCEPT(
+			            'Municipality Populations',
+			            'Municipality Populations'[Municipality]
+			        )
+			    )
+		dataType: double
+		formatString: +0.0\p\p;-0.0\p\p
+		lineageTag: 9a0705dc-3f59-49a3-b2af-e02935fe3310
+		summarizeBy: sum
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Municipality Populations","TableItemName":"Change vs Country (pp) Bins (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Change vs Country (pp) Bins (groups)' = ```
+			VAR __Count = 30
+			
+			VAR __Min = MIN('Municipality Populations'[Change vs Country (pp) for Bins])
+			
+			VAR __Max = MAX('Municipality Populations'[Change vs Country (pp) for Bins])
+			
+			VAR __Difference = (__Max - __Min)
+			
+			VAR __Size = IF(__Difference > 0, __Difference / __Count, 1)
+			
+			VAR __BinNumber = 
+				IF(
+					ISBLANK('Municipality Populations'[Change vs Country (pp) for Bins]),
+					BLANK(),
+					ROUNDDOWN(('Municipality Populations'[Change vs Country (pp) for Bins] - __Min) / __Size, 0)
+				)
+			
+			RETURN
+				IF(
+					ISBLANK('Municipality Populations'[Change vs Country (pp) for Bins]),
+					BLANK(),
+					__Min + (MIN(__BinNumber, __Count - 1) * __Size)
+				)
+			```
+		dataType: double
+		formatString: +0.0\p\p;-0.0\p\p
+		lineageTag: 705bbba9-ddf4-4ca8-a797-48b2d66c2716
+		summarizeBy: none
+		isDataTypeInferred
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Municipality Populations"
+				          }
+				        },
+				        "Property": "Change vs Country (pp) for Bins"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"m","Entity":"Municipality Populations"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Change vs Country (pp) for Bins"}}],"BinItem":{"Expression":{"Member":{"Expression":{"Discretize":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"m"}},"Property":"Change vs Country (pp) for Bins"}},"Count":30}},"Member":"Min"}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Change vs Country (pp) Bins' = INT([Change vs Country (pp)])
+		dataType: int64
+		formatString: +0\p\p;-0\p\p
+		lineageTag: be5ff640-8910-44f3-9a9e-cf033399104f
+		summarizeBy: sum
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Change = [2024] - [2014]
+		dataType: int64
+		formatString: +#,#;-#,#
+		lineageTag: 2d898156-bb43-4ec7-8854-4dc62fee60bb
+		summarizeBy: sum
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Change (%)' = DIVIDE([Change], [2014])
+		dataType: double
+		formatString: +0.0%;-0.0%
+		lineageTag: 58a024b1-cf72-4d03-ba3c-bd65a74d1961
+		summarizeBy: sum
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column 'Change Country (%)' = ```
+			
+			    CALCULATE(
+			        [Change (%)],
+			        REMOVEFILTERS('Municipality Populations')
+			    )
+			```
+		dataType: double
+		formatString: +0.0%;-0.0%
+		lineageTag: 2b6ee49b-9ae7-46bb-a2ba-c1863ab09736
+		summarizeBy: sum
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	partition 'Municipality Populations' = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files(#"File Path"),
+				    #"Filtered CSV file type" = Table.SelectRows(Source, each Text.StartsWith([Name], "Population ") and Text.EndsWith([Name], ".csv")),
+				    #"Filtered CSVs" = Table.SelectRows(#"Filtered CSV file type", each ([Name] = "Population 2014.csv" or [Name] = "Population 2024.csv")),
+				    #"Added Table from CSV" = Table.AddColumn(#"Filtered CSVs", "Table from CSV", each
+				        Table.PromoteHeaders(
+				            Csv.Document([Content])
+				        ),
+				        type table
+				    ),
+				    #"Added Renamed Columns by Position" = Table.AddColumn(#"Added Table from CSV", "Renamed Columns by Position", each Table.RenameColumns(
+				            [Table from CSV],
+				            {
+				              {Table.ColumnNames([Table from CSV]){0}, "Municipality"},
+				              {Table.ColumnNames([Table from CSV]){1}, "Population"}
+				             }
+				        ),
+				        type table
+				    ),
+				    #"Expanded Renamed Columns by Position" = Table.ExpandTableColumn(#"Added Renamed Columns by Position", "Renamed Columns by Position", {"Municipality", "Population"}, {"Municipality", "Population"}),
+				    #"Removed Other Columns 1" = Table.SelectColumns(#"Expanded Renamed Columns by Position",{"Name", "Population", "Municipality"}),
+				    #"Extracted Year" = Table.TransformColumns(#"Removed Other Columns 1", {{"Name", each Text.BetweenDelimiters(_, "Population ", ".csv"), type text}}),
+				    #"Split Off Parentheses" = Table.SplitColumn(#"Extracted Year", "Municipality", Splitter.SplitTextByEachDelimiter({" ("}, QuoteStyle.Csv, false), {"Municipality", "Parentheses"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Split Off Parentheses", {"Municipality"}, #"Municipality Fusions", {"Old"}, "Fusions", JoinKind.LeftOuter),
+				    #"Expanded Fusions" = Table.ExpandTableColumn(#"Merged Queries", "Fusions", {"New"}, {"New Municipality"}),
+				    #"Added New Municipality" = Table.AddColumn(#"Expanded Fusions", "Fused Municipality", each if [New Municipality] is null then [Municipality] else [New Municipality], type text),
+				    #"Removed Other Columns 2" = Table.SelectColumns(#"Added New Municipality",{"Name", "Population", "Fused Municipality"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns 2",{{"Population", Int64.Type}}),
+				    #"Grouped Rows" = Table.Group(#"Changed Type", {"Name", "Fused Municipality"}, {{"Population", each List.Sum([Population]), Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Grouped Rows",{{"Fused Municipality", "Municipality"}}),
+				    #"Replaced Blégny" = Table.ReplaceValue(#"Renamed Columns", "Blégny", "Blegny", Replacer.ReplaceText, {"Municipality"}),
+				    #"Replaced Genepiën" = Table.ReplaceValue(#"Replaced Blégny", "Genepiën", "Genepien", Replacer.ReplaceText, {"Municipality"}),
+				    #"Replaced ’" = Table.ReplaceValue(#"Replaced Genepiën","’","'",Replacer.ReplaceText,{"Municipality"}),
+				    #"Pivoted Name" = Table.Pivot(#"Replaced ’", List.Distinct(#"Replaced ’"[Name]), "Name", "Population"),
+				    #"Merged Municipalities Geocoded" = Table.NestedJoin(#"Pivoted Name", {"Municipality"}, #"Municipalities Geocoded", {"Municipality"}, "Municipalities Geocoded", JoinKind.Inner),
+				    #"Expanded Municipalities Geocoded" = Table.ExpandTableColumn(#"Merged Municipalities Geocoded", "Municipalities Geocoded", {"Latitude", "Longitude", "ZIndex"}, {"Latitude", "Longitude", "ZIndex"})
+				in
+				    #"Expanded Municipalities Geocoded"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

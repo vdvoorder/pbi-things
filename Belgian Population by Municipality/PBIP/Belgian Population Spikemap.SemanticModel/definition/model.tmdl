@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.132.1053.0 (24.08)
+
+annotation PBI_QueryOrder = ["File Path","Municipality Fusions","Municipalities Geocoded","Municipality Populations","_Measures"]
+
+annotation PBI_ProTooling = ["CalcGroup","DaxQueryView_Desktop","DevMode"]
+
+annotation __TEdtr = 1
+
+ref table 'Municipality Populations'
+ref table _Measures
+ref table 'Waterfall Table'
+
+ref cultureInfo en-US
+

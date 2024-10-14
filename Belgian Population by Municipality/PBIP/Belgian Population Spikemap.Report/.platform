@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Belgian Population Spikemap"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6ce2ffcc-23e3-4a67-982e-05e0fd7af510"
+  }
+}
