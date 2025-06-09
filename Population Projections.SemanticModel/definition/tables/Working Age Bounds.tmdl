@@ -1,0 +1,26 @@
+table 'Working Age Bounds'
+	isHidden
+	lineageTag: db6c9a6f-4c17-4975-810f-9f4d63b595b8
+
+	column 'Working Age Bounds'
+		isHidden
+		formatString: #\ \y\e\a\r\s \o\l\d
+		lineageTag: 3a495225-a8d7-46a4-9940-09d5aae07d6d
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	partition 'Working Age Bounds' = calculated
+		mode: import
+		source = GENERATESERIES([Youngest Age], [Oldest Age], 1)
+
+	annotation PBI_Id = 603aa2088c7247aa9884eeef37169756
+

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "6f2fd9011e80a13c331f",
+  "position": {
+    "x": 982.22222222222217,
+    "y": 130,
+    "z": 8500,
+    "height": 227.77777777777777,
+    "width": 270,
+    "tabOrder": 16005
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "▶",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#e2afca"
+                    }
+                  },
+                  {
+                    "value": " Data was downloaded from the United Nations Population Division API in May 2025. Visit the United Nations Population Division here: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": "https://population.un.org/wpp/",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#b6377a"
+                    },
+                    "url": "https://population.un.org/wpp/"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "▶",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#e2afca"
+                    }
+                  },
+                  {
+                    "value": " Design was inspired by Miguel Myers' demo for Gartner's Data & Analytics Summit Bake-Off, found here: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": "https://www.linkedin.com/posts/miguelmyers_powerbi-bibakeoff-gartner-activity-6934590874257436672-cpWW/",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "color": "#b6377a"
+                    },
+                    "url": "https://www.linkedin.com/posts/miguelmyers_powerbi-bibakeoff-gartner-activity-6934590874257436672-cpWW/"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Credits Text'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "isHidden": true
+}

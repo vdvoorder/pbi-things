@@ -1,0 +1,94 @@
+table 'Population Projections'
+	isHidden
+	lineageTag: 412e1fcf-9ed8-451e-ba8d-a123dd1c4a81
+
+	column 'Country ISO Alpha-3 Code'
+		dataType: string
+		isHidden
+		lineageTag: e12e8d26-fd8d-44e6-8605-b3b474fcac18
+		summarizeBy: none
+		sourceColumn: Country ISO Alpha-3 Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calculation Variant'
+		dataType: string
+		isHidden
+		lineageTag: 1cd7378a-4629-47ae-bb6a-c815a6a43fdb
+		summarizeBy: none
+		sourceColumn: Calculation Variant
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 404a5e8c-5c29-4beb-b940-16f83b651a60
+		summarizeBy: none
+		sourceColumn: Year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Age
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cddcae02-362e-4f8c-9b14-91f9bea3f812
+		summarizeBy: none
+		sourceColumn: Age
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Population
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9348ae88-2536-4eb2-b3bd-df4a05d46f8f
+		summarizeBy: none
+		sourceColumn: Population
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Population Projections' = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files(#"UN Population Files Path"),
+				    #"Filtered for parquet files" = Table.SelectRows(Source, each ([Extension] = ".parquet")),
+				    #"Added File Year" = Table.AddColumn(#"Filtered for parquet files", "File Year", each Text.BetweenDelimiters([Name], "un_population_", "_loc"), type text),
+				    #"Added File Year Last Digit" = Table.AddColumn(#"Added File Year", "File Year Last Digit", each Text.End([File Year], 1), type text),
+				    #"Filtered File Year" = Table.SelectRows(#"Added File Year Last Digit", each not Text.StartsWith([File Year], "1")),
+				    #"Filtered File Year Last Digit" = Table.SelectRows(#"Filtered File Year", each ([File Year Last Digit] = "0" or [File Year Last Digit] = "5")),
+				    #"Added Table From Parquet" = Table.AddColumn(#"Filtered File Year Last Digit", "Table From Parquet", each Parquet.Document([Content])),
+				    #"Expanded Table from Parquet" = Table.ExpandTableColumn(#"Added Table From Parquet", "Table From Parquet", {"locationId", "location", "iso3", "iso2", "locationTypeId", "indicatorId", "indicator", "indicatorDisplayName", "sourceId", "source", "revision", "variantId", "variant", "variantShortName", "variantLabel", "timeId", "timeLabel", "timeMid", "categoryId", "category", "estimateTypeId", "estimateType", "estimateMethodId", "estimateMethod", "sexId", "sex", "ageId", "ageLabel", "ageStart", "ageEnd", "ageMid", "value"}, {"locationId", "location", "iso3", "iso2", "locationTypeId", "indicatorId", "indicator", "indicatorDisplayName", "sourceId", "source", "revision", "variantId", "variant", "variantShortName", "variantLabel", "timeId", "timeLabel", "timeMid", "categoryId", "category", "estimateTypeId", "estimateType", "estimateMethodId", "estimateMethod", "sexId", "sex", "ageId", "ageLabel", "ageStart", "ageEnd", "ageMid", "value"}),
+				    // locationIds over 900 are non-country entities like regions, continents, world
+				    #"Filtered locationId" = Table.SelectRows(#"Expanded Table from Parquet", each ([locationId] < 900)),
+				    #"Rounded Off value" = Table.TransformColumns(#"Filtered locationId",{{"value", each Number.Round(_, 0), type number}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Rounded Off value",{"iso3", "variant", "timeLabel", "ageLabel", "value"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"iso3", "Country ISO Alpha-3 Code"}, {"variant", "Calculation Variant"}, {"timeLabel", "Year"}, {"ageLabel", "Age"}, {"value", "Population"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Country ISO Alpha-3 Code", type text}, {"Calculation Variant", type text}, {"Year", type date}, {"Age", Int64.Type}, {"Population", Int64.Type}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","Median","Baseline trend",Replacer.ReplaceText,{"Calculation Variant"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Low-fertility","Fewer babies than expected",Replacer.ReplaceText,{"Calculation Variant"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","High-fertility","More babies than expected",Replacer.ReplaceText,{"Calculation Variant"})
+				in
+				    #"Replaced Value2"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

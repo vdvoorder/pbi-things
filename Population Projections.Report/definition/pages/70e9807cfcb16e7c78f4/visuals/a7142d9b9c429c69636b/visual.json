@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "a7142d9b9c429c69636b",
+  "position": {
+    "x": 428,
+    "y": 92,
+    "z": 4000,
+    "height": 186,
+    "width": 535,
+    "tabOrder": 6000
+  },
+  "visualGroup": {
+    "displayName": "SM Column Chart",
+    "groupMode": "ScaleMode"
+  }
+}

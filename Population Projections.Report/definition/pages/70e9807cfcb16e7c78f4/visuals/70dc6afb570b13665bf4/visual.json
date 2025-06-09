@@ -1,0 +1,928 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "70dc6afb570b13665bf4",
+  "position": {
+    "x": 6,
+    "y": 0,
+    "z": 0,
+    "height": 122.31111111111112,
+    "width": 399.64444444444445,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "Dynamic Text - Geographic Scope"
+                      }
+                    },
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": "in ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "Selected Semidecade or Year"
+                      }
+                    },
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": ", for every person of working age, there ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "Dynamic Text - Were or Will Be"
+                      }
+                    },
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR Unformatted - For Selected Year"
+                      }
+                    },
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " older people depending on them for care, equating to an old-age dependency ratio of ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR - For Selected Year"
+                      }
+                    },
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "10.5pt",
+                      "color": "#b6377a"
+                    }
+                  },
+                  {
+                    "value": ".",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "This is a ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR SY vs CY %"
+                      }
+                    },
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " or ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR SY vs CY PP"
+                      }
+                    },
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR SY vs CY Increase/Decrease"
+                      }
+                    },
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " compared to ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "CY"
+                      }
+                    },
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": ", when the old-age dependency ratio is ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "OADR CY"
+                      }
+                    },
+                    "textStyle": {
+                      "fontSize": "10.5pt",
+                      "color": "#b6377a"
+                    }
+                  },
+                  {
+                    "value": ".",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "10.5pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Dynamic Text - Geographic Scope"
+                                },
+                                "Name": "_Measures.Dynamic Text - Geographic Scope"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.Dynamic Text - Geographic Scope"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Dynamic Text - Geographic Scope",
+                      "utterance": "dynamic text - geographic scope"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Dynamic Text - Geographic Scope"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Selected Year - Unformatted"
+                                },
+                                "Name": "_Measures.OADR Unformatted - For Selected Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR Unformatted - For Selected Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR Unformatted - For Selected Year",
+                      "utterance": "OADR unformatted - for selected year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR Unformatted - For Selected Year"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Selected Semidecade or Year"
+                                },
+                                "Name": "_Measures.OADR - For Selected Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR - For Selected Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR - For Selected Year",
+                      "utterance": "OADR - for selected year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR - For Selected Year"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Selected Semidecade or Year"
+                                },
+                                "Name": "_Measures.Selected Semidecade or Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.Selected Semidecade or Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Selected Semidecade or Year",
+                      "utterance": "Selected Semidecade or Year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Selected Semidecade or Year"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Dynamic Text - Were or Will Be"
+                                },
+                                "Name": "_Measures.Dynamic Text - Were or Will Be"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.Dynamic Text - Were or Will Be"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Dynamic Text - Were or Will Be",
+                      "utterance": "dynamic text - was or will be"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Dynamic Text - Were or Will Be"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                                },
+                                "Name": "_Measures.OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR PP Change Compared to Current Year",
+                      "utterance": "OADR - for selected semidecade or year - PP change compared to current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR PP Change Compared to Current Year"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Selected Semidecade or Year - % Change Compared to Current Year"
+                                },
+                                "Name": "_Measures.OADR - For Selected Semidecade or Year - % Change Compared to Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR - For Selected Semidecade or Year - % Change Compared to Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR SY vs CY %",
+                      "utterance": "OADR - for selected semidecade or year - % change compared to current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR SY vs CY %"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                                },
+                                "Name": "_Measures.OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR - For Selected Semidecade or Year - PP Change Compared to Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR SY vs CY PP",
+                      "utterance": "OADR - for selected semidecade or year - PP change compared to current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR SY vs CY PP"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Dynamic Text - OADR Increase or Decrease vs Current Year"
+                                },
+                                "Name": "_Measures.Dynamic Text - OADR Increase or Decrease vs Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.Dynamic Text - OADR Increase or Decrease vs Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR SY vs CY Increase/Decrease",
+                      "utterance": "dynamic text - OADR increase or decrease vs current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR SY vs CY Increase/Decrease"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "OADR - For Current Year"
+                                },
+                                "Name": "_Measures.OADR - For Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.OADR - For Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "OADR CY",
+                      "utterance": "OADR - for current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "OADR CY"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Measures",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Current Year"
+                                },
+                                "Name": "_Measures.Current Year"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Measures.Current Year"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "CY",
+                      "utterance": "current year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "CY"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Description Text Box'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "eed9f941556518136521"
+}

@@ -1,0 +1,579 @@
+table _Measures
+	lineageTag: a513c13a-e98a-4410-ac35-3db99e490dd5
+
+	measure 'Oldest Age' = MAX( 'Population Projections'[Age] )
+		formatString: 0
+		lineageTag: 581a12ef-5043-4d49-b485-e54bdc60b486
+
+	measure 'Total Population' =
+			
+			IF(
+			    ISFILTERED( 'Year' ),
+			    CALCULATE(
+			        SUM( 'Population Projections'[Population] ),
+			        FIRSTDATE ('Year'[Year Date] )
+			    ),
+			    BLANK ()
+			)
+			// https://www.daxpatterns.com/semi-additive-calculations/#code1
+		formatString: #,0
+		lineageTag: 52e19753-f4f8-4cb5-90c6-7b60f292d0c6
+
+	measure 'Population Working-Age People' =
+			
+			VAR SelectedWorkingAgeLowerBoundValue = [Working Age Lower Bound Value]
+			VAR SelectedWorkingAgeUpperBoundValue = [Working Age Upper Bound Value]
+			VAR LaborForceParticipants =
+			    CALCULATE(
+			        [Total Population],
+			        'Population Projections'[Age] >= SelectedWorkingAgeLowerBoundValue &&
+			        'Population Projections'[Age] < SelectedWorkingAgeUpperBoundValue
+			    )
+			RETURN LaborForceParticipants
+		formatString: #,0
+		lineageTag: 9ecb10b1-bc85-41b2-9f86-1b5d3256a04d
+
+	measure 'Working Age Lower Bound Value' = MIN( 'Working Age Bounds'[Working Age Bounds] )
+		formatString: 0
+		isHidden
+		lineageTag: d341f952-4f6c-4b91-997e-a9359bab581e
+
+	measure 'Working Age Upper Bound Value' = MAX( 'Working Age Bounds'[Working Age Bounds] )
+		formatString: 0
+		isHidden
+		lineageTag: c711a8fa-44d1-4386-9891-3a64f59e44ae
+
+	measure 'Population Old-Age People' =
+			
+			VAR SelectedWorkingAgeUpperBoundValue = [Working Age Upper Bound Value]
+			VAR Dependents =
+			    CALCULATE(
+			        [Total Population],
+			        'Population Projections'[Age] >= SelectedWorkingAgeUpperBoundValue
+			    )
+			RETURN Dependents
+		formatString: #,0
+		lineageTag: 54490f48-b4db-4934-9025-fafd60e95628
+
+	measure OADR = ```
+			
+			    DIVIDE(
+			        [Population Old-Age People],
+			        [Population Working-Age People]
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: cc8c0d5b-3b82-4267-8905-a9f7122b0700
+
+	measure 'Latest Year' = MAX( 'Year'[Year] )
+		formatString: 0
+		lineageTag: 2be3a5c3-de6f-46de-9cdd-2c78d1df47fc
+
+	measure 'Dynamic Color - By Age' =
+			
+			VAR _WorkingAgeUpperBound = [Working Age Upper Bound Value]
+			VAR _WorkingAgeLowerBound = [Working Age Lower Bound Value]
+			VAR _SelectedAgeCategory = SELECTEDVALUE( 'Population Projections'[Age] )
+			VAR _ColorOpacity = ""
+			VAR _ColorOldAgeDependent = "#c43b84" & _ColorOpacity
+			VAR _ColorWorkingAge = "#888888" & _ColorOpacity
+			VAR _ColorYoungAgeDependent = "#bbbbbb" & _ColorOpacity
+			VAR _Colors =
+			SWITCH(
+			    TRUE(),
+			    _SelectedAgeCategory > _WorkingAgeUpperBound, _ColorOldAgeDependent,
+			    _SelectedAgeCategory <= _WorkingAgeUpperBound
+			        && _SelectedAgeCategory > _WorkingAgeLowerBound, _ColorWorkingAge,
+			    _SelectedAgeCategory <= _WorkingAgeLowerBound, _ColorYoungAgeDependent,
+			    BLANK()
+			)
+			RETURN _Colors
+		lineageTag: 3c2ef961-d611-4ef8-996c-e67d03b19de1
+
+	measure '% Working-Age People' = DIVIDE( [Population Working-Age People], [Total Population] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 31767a13-51ae-4aee-a278-8c090132975a
+
+	measure '% Old-Age Dependent People' = DIVIDE([Population Old-Age People], [Total Population] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ca39e8d5-f5d8-48bd-84e9-868d8c115b7a
+
+	measure 'Dynamic Text - Geographic Scope' =
+			
+			VAR _SelectedGeography =
+			    SELECTEDVALUE(
+			        'Country'[Country Name],
+			        SELECTEDVALUE( 'Country'[Region Name] )
+			    )
+			VAR _Result =
+			    IF(
+			        ISBLANK(_SelectedGeography),
+			        "Globally ",
+			        "In " & _SelectedGeography & " "
+			    )
+			RETURN _Result
+		lineageTag: 9be5a373-e24f-454e-b49f-2ba1b9e855b8
+
+	measure 'OADR - Up To Selected Year' = ```
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _SelectedYearOrDecade =
+			    SELECTEDVALUE(
+			        'Year'[Year],
+			            SELECTEDVALUE( 'Year'[Year] )
+			    )
+			VAR _Result =
+			    IF(
+			        _SelectedYearOrDecade <= _SelectedYear,
+			        [OADR],
+			        BLANK()
+			    )
+			RETURN _Result
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 6b3b6bc3-58be-419e-a44a-1b9812b75026
+
+	measure 'OADR - Only Selected Semidecade' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _Result =
+			    IF(
+			        SELECTEDVALUE( 'Year'[Year] ) = _SelectedYear,
+			        [OADR],
+			        BLANK()
+			    )
+			RETURN _Result
+		formatString: 0%;-0%;0%
+		lineageTag: 41d72659-4cdf-4f7d-9152-d71bb06e4e3a
+
+	measure '% Working-Age People - For Selected Semidecade or Year - Format' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _OADPSelectedYear =
+			    CALCULATE(
+			        [% Working-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [% Working-Age People],
+			        _OADPSelectedYear
+			    ) * 100
+			RETURN _Result
+		formatString: 0.0\%\ w\o\r\k\i\n\g\-\a\g\e
+		lineageTag: edfc9636-6b45-40a5-884e-87cf782f89cc
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Youngest Age' = MIN( 'Population Projections'[Age] )
+		formatString: 0
+		lineageTag: def629e2-5128-4ab8-bfcf-17a02b3c0db7
+
+	measure 'Year Selected Parameter Value' = SELECTEDVALUE( 'Year Parameter Selection'[Parameter] )
+		formatString: 0
+		lineageTag: 0ebb613a-b4fd-40da-9fbb-ca0e9a73e1a2
+
+	measure 'OADR - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _OADRSelectedYear =
+			    CALCULATE(
+			        [OADR],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [OADR],
+			        _OADRSelectedYear
+			    )
+			RETURN _Result
+		formatString: 0%;-0%;0%
+		lineageTag: 4e83bedd-be0f-424d-9fd6-b41eb5cc6b2b
+
+	measure 'Total Population - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _PopSelectedYear =
+			    CALCULATE(
+			        [Total Population],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [Total Population],
+			        _PopSelectedYear
+			    )
+			RETURN _Result
+		lineageTag: 8702115a-8a67-4229-9bbc-86b6cba6bd20
+
+		formatStringDefinition =
+				VAR CurrentValue = SELECTEDMEASURE()
+				RETURN
+				    SWITCH (
+				        TRUE (),
+				        CurrentValue <= 1E3, "#,0.0 people",
+				        CurrentValue <= 1E6, "#,0,.0K people",
+				        CurrentValue <= 1E9, "#,0,,.0M people",
+				        CurrentValue <= 1E12, "#,0,,,.0B people"
+				    )
+				
+				// https://www.sqlbi.com/articles/introducing-dynamic-format-strings-for-dax-measures/#code2
+
+	measure '% Working-Age People - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _WAPSelectedYear =
+			    CALCULATE(
+			        [% Working-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [% Working-Age People],
+			        _WAPSelectedYear
+			    )
+			RETURN _Result
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: cd85ba41-382a-4380-9f96-69d4656a551b
+
+	measure '% Old-Age Dependent People - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _OADPSelectedYear =
+			    CALCULATE(
+			        [% Old-Age Dependent People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [% Old-Age Dependent People],
+			        _OADPSelectedYear
+			    )
+			RETURN _Result
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5ff0ec03-5742-4f31-a33f-9b602d13e276
+
+	measure 'OADR - For Selected Year - Unformatted' = [OADR - For Selected Semidecade or Year]
+		lineageTag: b7ca76d5-0ce5-40a4-a9c6-65aae49b4593
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Semidecade or Year' = ```
+			
+			SELECTEDVALUE(
+			    'Year'[Year],
+			    SELECTEDVALUE('Year Parameter Selection'[Parameter])
+			)    
+			```
+		formatString: 0
+		lineageTag: 7a2ab28d-1c44-42f1-99de-5d9c5d0cb828
+
+	measure 'Dynamic Text - Were or Will Be' =
+			
+			IF(
+			    [Selected Semidecade or Year] > YEAR(TODAY()),
+			    "will be",
+			    "were"
+			)
+		lineageTag: e1d8c61a-4a68-42e5-8fbb-03694020b77d
+
+	measure 'Population Young-Age People' =
+			
+			VAR SelectedWorkingAgeUpperBoundValue = [Working Age Lower Bound Value]
+			VAR Dependents =
+			    CALCULATE(
+			        [Total Population],
+			        'Population Projections'[Age] < SelectedWorkingAgeUpperBoundValue
+			    )
+			RETURN Dependents
+		formatString: #,0
+		lineageTag: 2f710628-e094-4259-97c9-412fe8e51181
+
+	measure '% Young-Age People' = DIVIDE( [Population Young-Age People], [Total Population] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 30096fd1-fe53-49d3-be1e-3a13d4db7c2a
+
+	measure 'Population Old-Age People - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _PopSelectedYear =
+			    CALCULATE(
+			        [Population Old-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [Population Old-Age People],
+			        _PopSelectedYear
+			    )
+			RETURN _Result
+		lineageTag: d89e7a6e-e71e-45de-a18c-993c548b01f8
+
+		formatStringDefinition =
+				VAR CurrentValue = SELECTEDMEASURE()
+				RETURN
+				    SWITCH (
+				        TRUE (),
+				        CurrentValue <= 1E3, "#,0.0 people",
+				        CurrentValue <= 1E6, "#,0,.0K people",
+				        CurrentValue <= 1E9, "#,0,,.0M people",
+				        CurrentValue <= 1E12, "#,0,,,.0B people"
+				    )
+				
+				// https://www.sqlbi.com/articles/introducing-dynamic-format-strings-for-dax-measures/#code2
+
+	measure 'Population Working-Age People - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _PopSelectedYear =
+			    CALCULATE(
+			        [Population Working-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [Population Working-Age People],
+			        _PopSelectedYear
+			    )
+			RETURN _Result
+		lineageTag: beaf396b-68c1-48d5-87e1-f51496d4b0c5
+
+		formatStringDefinition =
+				VAR CurrentValue = SELECTEDMEASURE()
+				RETURN
+				    SWITCH (
+				        TRUE (),
+				        CurrentValue <= 1E3, "#,0.0 people",
+				        CurrentValue <= 1E6, "#,0,.0K people",
+				        CurrentValue <= 1E9, "#,0,,.0M people",
+				        CurrentValue <= 1E12, "#,0,,,.0B people"
+				    )
+				
+				// https://www.sqlbi.com/articles/introducing-dynamic-format-strings-for-dax-measures/#code2
+
+	measure 'Population Young-Age People - For Selected Semidecade or Year' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _PopSelectedYear =
+			    CALCULATE(
+			        [Population Young-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [Population Young-Age People],
+			        _PopSelectedYear
+			    )
+			RETURN _Result
+		lineageTag: 82618df3-6429-4617-b08e-e594dbf20432
+
+		formatStringDefinition =
+				VAR CurrentValue = SELECTEDMEASURE()
+				RETURN
+				    SWITCH (
+				        TRUE (),
+				        CurrentValue <= 1E3, "#,0.0 people",
+				        CurrentValue <= 1E6, "#,0,.0K people",
+				        CurrentValue <= 1E9, "#,0,,.0M people",
+				        CurrentValue <= 1E12, "#,0,,,.0B people"
+				    )
+				
+				// https://www.sqlbi.com/articles/introducing-dynamic-format-strings-for-dax-measures/#code2
+
+	measure '% Old-Age Dependent People - For Selected Semidecade or Year - Format' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _OADPSelectedYear =
+			    CALCULATE(
+			        [% Old-Age Dependent People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [% Old-Age Dependent People],
+			        _OADPSelectedYear
+			    ) * 100
+			RETURN _Result
+		formatString: 0.0\%\ \o\l\d\-\a\g\e
+		lineageTag: 12d120c4-0e49-45fa-9aa0-f2104ef5940a
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure '% Young-Age People - For Selected Semidecade or Year - Format' =
+			
+			VAR _SelectedYear = [Year Selected Parameter Value]
+			VAR _YAPSelectedYear =
+			    CALCULATE(
+			        [% Young-Age People],
+			        REMOVEFILTERS( 'Year' ),
+			        'Year'[Year] = _SelectedYear
+			    )
+			VAR _Result =
+			    IF(
+			        HASONEVALUE('Year'[Year]),
+			        [% Young-Age People],
+			        _YAPSelectedYear
+			    )
+			RETURN _Result * 100
+		formatString: 0.0\%\ \y\o\u\n\g\-\a\g\e
+		lineageTag: 74a8ffd2-ccfc-4aa2-807d-1e4eef85aad9
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'OADR - For Selected Semidecade or Year - % Change Compared to Current Year' =
+			
+			VAR _CurrentYearOADR = [OADR - For Current Year]
+			VAR _SelectedOADR = [OADR - For Selected Semidecade or Year]
+			VAR _AbsoluteDifference = _SelectedOADR - _CurrentYearOADR
+			VAR _RelativeDifference = DIVIDE( _AbsoluteDifference, _CurrentYearOADR)
+			RETURN _RelativeDifference
+		formatString: 0%;-0%;0%
+		lineageTag: 85ac1299-46cb-4aa1-9e97-7689d8fbc3fd
+
+	measure 'OADR - For Current Year' =
+			
+			VAR _CurrentYear = [Current Year]
+			VAR _CurrentYearOADR =
+			    CALCULATE(
+			        [OADR - For Selected Semidecade or Year],
+			        REMOVEFILTERS('Year'),
+			        'Year'[Year] = _CurrentYear
+			    )
+			RETURN _CurrentYearOADR
+		formatString: 0%;-0%;0%
+		lineageTag: e6ae9254-d89b-41ac-b9f9-83b6aee01d16
+
+	measure 'OADR - For Selected Semidecade or Year - PP Change Compared to Current Year' =
+			
+			VAR _CurrentYearOADR = [OADR - For Current Year]
+			VAR _SelectedOADR = [OADR - For Selected Semidecade or Year]
+			VAR _AbsoluteDifference = _SelectedOADR - _CurrentYearOADR
+			RETURN _AbsoluteDifference * 100
+		formatString: 0\p\p
+		lineageTag: c290e829-bae0-4549-ba8a-bed0aaa4e6cc
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Dynamic Text - OADR Increase or Decrease vs Current Year' =
+			
+			IF( [OADR - For Selected Semidecade or Year - % Change Compared to Current Year] > 0, "increase", "decrease")
+		lineageTag: d4b96263-cc48-4e3a-b335-c54a0ba5cd39
+
+	measure 'Current Year' = YEAR(TODAY())
+		formatString: 0
+		lineageTag: ad1de749-e915-40d3-8505-ca72112e13a2
+
+	measure 'Total Population - For Current Year - Negative' =
+			
+			VAR _CurrentYear = [Current Year]
+			VAR _CurrentYearPop =
+			    CALCULATE(
+			        [Total Population],
+			        REMOVEFILTERS('Year'),
+			        'Year'[Year] = _CurrentYear
+			    )
+			RETURN _CurrentYearPop * -1
+		formatString: 0
+		lineageTag: 7255ea6d-91cf-47e9-8d42-86b7f021f03c
+
+	measure 'Dynamic Color - By Age Opaque' =
+			
+			VAR _WorkingAgeUpperBound = [Working Age Upper Bound Value]
+			VAR _WorkingAgeLowerBound = [Working Age Lower Bound Value]
+			VAR _SelectedAgeCategory = SELECTEDVALUE( 'Population Projections'[Age] )
+			VAR _ColorOpacity = "99"
+			VAR _ColorOldAgeDependent = "#c43b84" & _ColorOpacity
+			VAR _ColorWorkingAge = "#888888" & _ColorOpacity
+			VAR _ColorYoungAgeDependent = "#bbbbbb" & _ColorOpacity
+			VAR _Colors =
+			SWITCH(
+			    TRUE(),
+			    _SelectedAgeCategory > _WorkingAgeUpperBound, _ColorOldAgeDependent,
+			    _SelectedAgeCategory <= _WorkingAgeUpperBound
+			        && _SelectedAgeCategory > _WorkingAgeLowerBound, _ColorWorkingAge,
+			    _SelectedAgeCategory <= _WorkingAgeLowerBound, _ColorYoungAgeDependent,
+			    BLANK()
+			)
+			RETURN _Colors
+		lineageTag: d26f5ce2-46b1-4977-88de-ddbfb2d5aba8
+
+	measure 'Selected Country' = SELECTEDVALUE( 'Country'[Country Name] )
+		lineageTag: 8c28cc1e-1792-48b0-8a58-dfda37a51310
+
+	measure 'Dynamic Format String - Population' =
+			
+			VAR CurrentValue = SELECTEDMEASURE()
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        CurrentValue <= 1E3, "#,0.0 people",
+			        CurrentValue <= 1E6, "#,0,.0K people",
+			        CurrentValue <= 1E9, "#,0,,.0M people",
+			        CurrentValue <= 1E12, "#,0,,,.0B people"
+			    )
+			
+			// https://www.sqlbi.com/articles/introducing-dynamic-format-strings-for-dax-measures/#code2
+		lineageTag: 87d4e928-6d5b-47b5-9fc9-1e8c2dff7e81
+
+	measure 'OADR - For Selected Semidecade or Year - Format Tooltip' = [OADR - For Selected Semidecade or Year]
+		formatString: 0.0%\ \o\l\d\-\a\g\e\ \d\e\p\e\n\d\e\n\c\y
+		lineageTag: 6907aed2-30cc-4fe3-916c-99d56f548676
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Selected Region' = SELECTEDVALUE( 'Country'[Region Name] )
+		lineageTag: daa3b554-396f-4c58-9a2d-1ccb80534ce1
+
+	measure 'OADR - Up To Selected Year - Format Tooltip' = ```
+			[OADR - Up To Selected Year]
+			
+			```
+		formatString: 0.0%\ \o\l\d\-\a\g\e\ \d\e\p\e\n\d\e\n\c\y
+		lineageTag: 614cfb52-f7b6-420f-8444-b4a2a4ae6a68
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Dynamic Text - Region in Year' = [Selected Region] & " in " & [Selected Semidecade or Year]
+		lineageTag: 59e36d0d-7055-489e-ac94-bdcd41ac5e25
+
+	measure 'Dynamic Color - Shade Over Year Parameter Selection' =
+			
+			IF(
+			    [Selected Semidecade or Year] <> [Year Selected Parameter Value],
+			    "#FFFFFF",
+			    "#FFFFFF00"
+			)
+		lineageTag: 81de94c6-e83c-4364-9567-df3efecb93a2
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.4.0/schema.json",
+  "name": "70e9807cfcb16e7c78f4",
+  "displayName": "Story",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "36625c1238ad24acfe27",
+        "displayName": "Country",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Country"
+              }
+            },
+            "Property": "Country Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'wallpaper3.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "wallpaper3859761052272522.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "40D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "fe486476526c8b86c705",
+      "target": "4a9cdb63745209eae212",
+      "type": "HighlightFilter"
+    },
+    {
+      "source": "8a1d1a994b167c076486",
+      "target": "fe486476526c8b86c705",
+      "type": "HighlightFilter"
+    },
+    {
+      "source": "4a9cdb63745209eae212",
+      "target": "fe486476526c8b86c705",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4a9cdb63745209eae212",
+      "target": "e2a414ba0f7964ac4ddd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8a1d1a994b167c076486",
+      "target": "e2a414ba0f7964ac4ddd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "fe486476526c8b86c705",
+      "target": "e2a414ba0f7964ac4ddd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8a1d1a994b167c076486",
+      "target": "9a3665cc3c85ef3c8dc6",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4a9cdb63745209eae212",
+      "target": "9a3665cc3c85ef3c8dc6",
+      "type": "DataFilter"
+    },
+    {
+      "source": "fe486476526c8b86c705",
+      "target": "9a3665cc3c85ef3c8dc6",
+      "type": "DataFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "9a3665cc3c85ef3c8dc6",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "e2a414ba0f7964ac4ddd",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "fe486476526c8b86c705",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "4a9cdb63745209eae212",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "8a1d1a994b167c076486",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "4a9cdb63745209eae212",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "fe486476526c8b86c705",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "8a1d1a994b167c076486",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "86c6bad8abdcafdc6564",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "bebaee01f1985cb86c33",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2a414ba0f7964ac4ddd",
+      "target": "2b1dfdead6b2a9ab4f50",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "2b1dfdead6b2a9ab4f50",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "86c6bad8abdcafdc6564",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9a3665cc3c85ef3c8dc6",
+      "target": "bebaee01f1985cb86c33",
+      "type": "NoFilter"
+    }
+  ]
+}

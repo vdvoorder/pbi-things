@@ -1,0 +1,24 @@
+table 'Year Parameter Selection'
+	isHidden
+	lineageTag: 6f18cd04-7c59-42ed-8bf1-45fb477169c4
+
+	column Parameter
+		isHidden
+		formatString: 0
+		lineageTag: 2db9b854-62a7-483d-babe-868e79dc37f2
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Year Parameter Selection' = calculated
+		mode: import
+		source = GENERATESERIES(1950, 2100, 5)
+
+	annotation PBI_Id = 93781143f2d34ccb92fc6a0a62d2f972
+

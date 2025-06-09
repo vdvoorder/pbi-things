@@ -1,0 +1,29 @@
+table Year
+	lineageTag: d4e42fda-25ea-4113-94bd-327b968e991a
+
+	column 'Year Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 9affff6a-d5df-4357-a106-1057833b3a4f
+		summarizeBy: none
+		sourceColumn: Population Projections[Year]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year = YEAR('Year'[Year Date])
+		formatString: 0
+		lineageTag: 12d98b7a-e916-447a-867e-b00b194ff7a3
+		isDefaultLabel
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Year = calculated
+		mode: import
+		source = DISTINCT('Population Projections'[Year])
+
+	annotation PBI_Id = d055e42d345a4c6d8abce360f3b57f1a
+

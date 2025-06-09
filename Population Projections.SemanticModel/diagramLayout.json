@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 2.1055189078928671
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 323.43232946001297
+          },
+          "nodeIndex": "Population Projections",
+          "nodeLineageTag": "412e1fcf-9ed8-451e-ba8d-a123dd1c4a81",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 563.91511716981859,
+            "y": 0
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "a513c13a-e98a-4410-ac35-3db99e490dd5",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 559.99337184146532,
+            "y": 381.88943130577263
+          },
+          "nodeIndex": "Working Age Bounds",
+          "nodeLineageTag": "db6c9a6f-4c17-4975-810f-9f4d63b595b8",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 274.44442393358258,
+            "y": 0
+          },
+          "nodeIndex": "Year",
+          "nodeLineageTag": "d4e42fda-25ea-4113-94bd-327b968e991a",
+          "size": {
+            "height": 156.74987301942394,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "Country",
+          "nodeLineageTag": "d7b9f4ac-06ca-4d20-956d-cf944f12bd48",
+          "size": {
+            "height": 156.52177911417058,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 564.53101289005065,
+            "y": 194.72719099804158
+          },
+          "nodeIndex": "Year Parameter Selection",
+          "nodeLineageTag": "6f18cd04-7c59-42ed-8bf1-45fb477169c4",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 1
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 94.988460683145,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

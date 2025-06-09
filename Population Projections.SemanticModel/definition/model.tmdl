@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.143.1204.0 (25.05)+23c84aace645781dd62b8a26eb0418c7e6a84b72
+
+annotation PBI_QueryOrder = ["UN Population Files Path","UNSD Mapping File Path","Map TopoJSON Countries to Geographic regions (UNSD)","Map TopoJSON Countries to Geographic regions (Manual)","_Measures","Country","Population Projections"]
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["CalcGroup","TMDLView_Desktop","DaxQueryView_Desktop","DevMode"]
+
+ref table 'Population Projections'
+ref table _Measures
+ref table 'Working Age Bounds'
+ref table Country
+ref table Year
+ref table 'Year Parameter Selection'
+
+ref cultureInfo en-US
+

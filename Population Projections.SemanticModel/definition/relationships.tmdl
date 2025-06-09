@@ -1,0 +1,8 @@
+relationship 582f0e7f-01a8-4a73-a650-5fe0b68883d6
+	fromColumn: 'Population Projections'.Year
+	toColumn: Year.'Year Date'
+
+relationship 703ea87d-b91e-52e4-df6f-8f348d8f438e
+	fromColumn: 'Population Projections'.'Country ISO Alpha-3 Code'
+	toColumn: Country.'Country ISO Alpha-3 Code'
+

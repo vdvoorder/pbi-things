@@ -1,0 +1,55 @@
+table Country
+	lineageTag: d7b9f4ac-06ca-4d20-956d-cf944f12bd48
+
+	column 'Region Name'
+		dataType: string
+		lineageTag: da29021e-aa61-482d-9d36-fdd8fcb25ba0
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Region Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country ISO Alpha-3 Code'
+		dataType: string
+		isKey
+		lineageTag: f56a5e28-6e42-421f-9456-fe64151a8863
+		summarizeBy: none
+		sourceColumn: Country ISO Alpha-3 Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Name'
+		dataType: string
+		lineageTag: 746db26f-d2d7-4f86-85b1-f9f287e64359
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: Country Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Country = m
+		mode: import
+		source =
+				let
+				    Source = Json.Document(File.Contents("C:\Users\rvande\OneDrive\Power BI\Projects\Population Projections\Data\countries_topojson\topo.json")),
+				    objects = Source[objects],
+				    subunits = objects[subunits],
+				    geometries = subunits[geometries],
+				    #"Converted to Table" = Table.FromList(geometries, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", {"arcs", "id", "properties"}, {"arcs", "id", "properties"}),
+				    #"Expanded properties" = Table.ExpandRecordColumn(#"Expanded Column1", "properties", {"name"}, {"name"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Expanded properties",{"id", "name"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"id"}, #"Map TopoJSON Countries to Geographic regions (UNSD)", {"ISO-alpha3 Code"}, "Map Countries to Geographic regions (UNSD)", JoinKind.LeftOuter),
+				    #"Expanded Map Countries to Geographic regions (UNSD)" = Table.ExpandTableColumn(#"Merged Queries", "Map Countries to Geographic regions (UNSD)", {"Region Name"}, {"Region Name"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded Map Countries to Geographic regions (UNSD)", {"id"}, #"Map TopoJSON Countries to Geographic regions (Manual)", {"id"}, "Manual topojson id to region mapping", JoinKind.LeftOuter),
+				    #"Expanded Manual topojson id to region mapping" = Table.ExpandTableColumn(#"Merged Queries1", "Manual topojson id to region mapping", {"region"}, {"region"}),
+				    #"Merged Columns" = Table.CombineColumns(#"Expanded Manual topojson id to region mapping",{"region", "Region Name"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Region Name"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Merged Columns",{{"id", "Country ISO Alpha-3 Code"}, {"name", "Country Name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

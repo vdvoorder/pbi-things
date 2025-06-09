@@ -1,0 +1,47 @@
+expression 'UN Population Files Path' = "C:\temp\un_population_data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: efc90307-8475-4dad-993f-1c034fe7fb53
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'UNSD Mapping File Path' = "C:\Users\rvande\OneDrive\Power BI\Projects\IMF API\Data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 455169df-c26a-4786-98f3-56e54b11148e
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Map TopoJSON Countries to Geographic regions (UNSD)' =
+		let
+		    Source = Folder.Contents(#"UNSD Mapping File Path"),
+		    #"Navigated File" = Source{[Name="UNSD — Methodology.csv"]}[Content],
+		    #"Imported CSV" = Csv.Document(
+		        #"Navigated File",
+		        [
+		            Delimiter=";",
+		            Columns=15,
+		            Encoding=65001,
+		            QuoteStyle = QuoteStyle.None
+		        ]
+		    ),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 74e7f43c-1f59-47c3-a384-b99f4d4a367c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Map TopoJSON Countries to Geographic regions (Manual)' =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8nYMVtJRcizOTFSK1YlWivCOAHJdS4vyC1LBAiHhfsjy7k6GSPKxAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [id = _t, region = _t])
+		in
+		    Source
+	lineageTag: b4e9d0fb-713a-4d49-a180-3453d06d994b
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

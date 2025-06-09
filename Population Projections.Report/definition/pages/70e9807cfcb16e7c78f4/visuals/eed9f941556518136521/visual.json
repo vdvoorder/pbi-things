@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "eed9f941556518136521",
+  "position": {
+    "x": 17,
+    "y": 162,
+    "z": 5000,
+    "height": 122.31111111111112,
+    "width": 405.64444444444445,
+    "tabOrder": 3000
+  },
+  "visualGroup": {
+    "displayName": "Dynamic Text",
+    "groupMode": "ScaleMode"
+  }
+}
